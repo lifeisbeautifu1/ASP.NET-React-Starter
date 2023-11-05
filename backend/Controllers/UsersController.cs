@@ -17,11 +17,10 @@ namespace Backend.Controllers
 		}
 
 		[HttpGet(Name = "getAllUsers")]
-		public async Task<IActionResult> Get()
+		public async Task<IActionResult> GetUsers()
 		{
 			var user = new User()
 			{
-				Id = 4,
 				Name = "John Doe",
 				Email = "johndoe@gmail.com"
 			};
@@ -38,7 +37,19 @@ namespace Backend.Controllers
 		[HttpGet("test")]
 		public string Test()
 		{
-			return "Hello World!!!!";
+			return "test!!!!";
+		}
+
+		[HttpGet("hello")]
+		public string Hello()
+		{
+			return "hello!";
+		}
+
+		[HttpGet("helloagain")]
+		public string HelloAgain()
+		{
+			return "hello again!";
 		}
 	}
 }

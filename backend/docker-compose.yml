@@ -11,17 +11,18 @@ services:
       - "db"
     container_name: backend-services
     ports:
-      - "5183:80"
+      - "8088:80"
     build:
       context: .
       dockerfile: Dockerfile
     environment:
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=postgres; IntegratedSecurity=true;Pooling=true;
       - ASPNETCORE_URLS=http://+:80
     networks:
       - dev
   db:
-    container_name: db
     image: postgres:latest
+    container_name: db
     ports:
       - "5433:5432"
     restart: always
@@ -30,9 +31,9 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=postgres
     volumes:
-      - app_data:/var/lib/postgres/data
+      - pg_data:/var/lib/postgresql/data
     networks:
       - dev
 
 volumes:
-  app_data:
+  pg_data:
