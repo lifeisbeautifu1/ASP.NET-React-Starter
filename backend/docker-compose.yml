@@ -1,0 +1,39 @@
+version: "3.4"
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  backend:
+    image: docker.io/library/backend
+    depends_on:
+      - "db"
+    container_name: backend-services
+    ports:
+      - "8088:80"
+    build:
+      context: .
+      dockerfile: Dockerfile
+    environment:
+      - ConnectionStrings__DefaultConnection=User ID=postgres;Password=postgres;Server=db;Port=5432;Database=postgres; IntegratedSecurity=true;Pooling=true;
+      - ASPNETCORE_URLS=http://+:80
+    networks:
+      - dev
+  db:
+    image: postgres:latest
+    container_name: db
+    ports:
+      - "5433:5432"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    networks:
+      - dev
+
+volumes:
+  pg_data:
